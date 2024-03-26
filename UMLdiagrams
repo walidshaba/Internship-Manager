@@ -1,0 +1,52 @@
+Entity Relationship Diagram ERD
+
++-------------+ 1 M +-----------+
+| users |------------| interns |
++-------------+ +-----------+
+| id (PK) | | id (PK) |
+| username | | user_id |---+
+| password | | supervisor_id |---+
+| is_admin | +-----------+ |
++-------------+ |
+|
+|
++------------------+ 1 M +------------------+
+| attendance |------------| weekly_reports |
++------------------+ +------------------+
+| id (PK) | | id (PK) |
+| intern_id (FK) | | intern_id (FK) |
+| date | | supervisor_id (FK) |
+| status | | report_date |
++------------------+ | report_image |
++------------------+
+
+Class Diagram
+
++---------------------------------------+
+| users |
++---------------------------------------+
+| - id: int (PK) |
+| - username: string |
+| - password: string |
+| - is_admin: boolean |
++---------------------------------------+
+| + register_user(username: string, |
+| password: string) |
+| + login_user(username: string, |
+| password: string): bool |
+| + logout_user() |
++---------------------------------------+
+^
+|
++----------------+---------------------+
+| interns |
++--------------------------------------+
+| - id: int (PK) |
+| - user_id: int (FK) |
+| - supervisor_id: int (FK) |
++--------------------------------------+
+| + add_internship(title: string, |
+| description: string,|
+| employer: string): bool|
+| + get_internships(): array |
++--------------------------------------+
