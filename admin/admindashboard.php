@@ -1,11 +1,11 @@
-<!-- <?php
+<?php
       session_start();
       include('../db_connect.php');
       if ($_SESSION['admin'] == "") {
         $que = mysqli_query($con, "select * from admin where  user_name='" . $_SESSION['admin'] . "'");
         $res = mysqli_fetch_array($que);
         $_SESSION = $res;
-      } ?> -->
+      } ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
