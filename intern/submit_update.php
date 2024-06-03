@@ -33,9 +33,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'intern') {
         <a href="submit_update.php">Submit Update</a>
         <a href="message_center.php">Message Center</a>
         <a href="../profile.php">Profile Management</a>
-        <!-- <a href="progress_tracking.php">Progress Tracking</a> -->
         <a href="log_attendance.php">Log Attendance</a>
-        <a href="upload_photo.php">Upload Photo</a>
         <a href="../logout.php">Logout</a>
     </nav>
     <main>

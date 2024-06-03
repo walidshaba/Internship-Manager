@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 require 'conn/db_connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -13,13 +12,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $verification_token = bin2hex(random_bytes(16));
     $username = $_POST['username'];
 
+    // Check if the email already exists
+    $checkEmailSql = "SELECT * FROM users WHERE email = ?";
+    $checkEmailStmt = $conn->prepare($checkEmailSql);
+    $checkEmailStmt->bind_param("s", $email);
+    $checkEmailStmt->execute();
+    $checkEmailResult = $checkEmailStmt->get_result();
+
+    if ($checkEmailResult->num_rows > 0) {
+        echo "<script>
+            alert('Error: This email is already registered. Please use a different email.');
+            javascript:history.back();
+        </script>";
+        $checkEmailStmt->close();
+        $conn->close();
+        exit();
+    }
+
     // Check if there's an existing admin
     $result = $conn->query("SELECT * FROM users WHERE role = 'admin'");
     if ($result->num_rows > 0 && $_POST['role'] == 'admin') {
         die("Admin already exists.");
     }
 
-    $sql = "INSERT INTO users (first_name, last_name, email, phone_number, password, role, verification_token,username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql = "INSERT INTO users (first_name, last_name, email, phone_number, password, role, verification_token, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssss", $first_name, $last_name, $email, $phone_number, $password, $role, $verification_token, $username);
 
@@ -39,12 +55,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (mail($to, $subject, $message, $headers)) {
             echo "Registration successful! Please check your email to verify your account.";
         } else {
-            echo "Error! sending Message to you email";
+            echo "Error! sending Message to your email";
         }
     } else {
         echo "Error: " . $stmt->error;
     }
-}
 
+    $stmt->close();
+}
 
 $conn->close();
