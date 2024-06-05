@@ -33,7 +33,7 @@ if ($result->num_rows == 1) {
 
         echo "<script>
                     alert('Incorrect password');
-                    window.location.href = 'login.php';
+                    javascript:history.back();
 
               </script>";
         exit();
@@ -41,7 +41,7 @@ if ($result->num_rows == 1) {
 } else {
     echo "<script>
     alert('User not found!');
-    window.location.href = 'login.php';
+    javascript:history.back();
     </script>";
 }
 
