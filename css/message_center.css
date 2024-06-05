@@ -1,0 +1,74 @@
+.container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.user-list {
+  width: 30%;
+  border-right: 1px solid #ccc;
+}
+
+.user-list ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.user-list li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.user-list li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.message-box {
+  width: 70%;
+  padding: 20px;
+}
+
+#messages {
+  border: 1px solid #ccc;
+  padding: 10px;
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.message {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.message.sent {
+  background-color: #dff0d8;
+  text-align: right;
+}
+
+.message.received {
+  background-color: #f2f2f2;
+}
+
+#messageForm {
+  margin-top: 10px;
+}
+
+#messageForm textarea {
+  width: calc(100% - 90px);
+  height: 50px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#messageForm button {
+  width: 70px;
+  height: 50px;
+  margin-left: 10px;
+  border: none;
+  background-color: #5cb85c;
+  color: white;
+  border-radius: 5px;
+}
