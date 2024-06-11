@@ -33,11 +33,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $result = $conn->query("SELECT * FROM users WHERE role = 'admin'");
     if ($result->num_rows > 0 && $_POST['role'] == 'admin') {
         die("Admin already exists.");
+        echo "<script>
+                alert(\"Admin already Exist.\";
+                javascript:history.back();
+                 </script>";
     }
 
     $sql = "INSERT INTO users (first_name, last_name, email, phone_number, password, role, verification_token, username) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ssssssss", $first_name, $last_name, $email, $phone_number, $password, $role, $verification_token, $username);
+
+
 
     if ($stmt->execute()) {
         // Send verification email
@@ -52,11 +58,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         ini_set("auth_password", "your_gmail_password");
         ini_set("smtp_auth", "true");
         ini_set("smtp_secure", "tls");
-        if (mail($to, $subject, $message, $headers)) {
-            echo "Registration successful! Please check your email to verify your account.";
-        } else {
-            echo "Error! sending Message to your email";
-        }
+        header("Location: login.php");
+
+        // if (mail($to, $subject, $message, $headers)) {
+        //     echo "Registration successful! Please check your email to verify your account.";
+        // } else {
+        //     echo "Error! sending Message to your email";
+        // }
     } else {
         echo "Error: " . $stmt->error;
     }
